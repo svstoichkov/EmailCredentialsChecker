@@ -4,6 +4,25 @@
              xmlns:local="clr-namespace:EmailCredentialsChecker"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="{x:Type DataGrid}">
+            <Setter Property="FontSize"
+                    Value="25" />
+            <Setter Property="CanUserSortColumns"
+                    Value="True" />
+            <Setter Property="AutoGenerateColumns"
+                    Value="False" />
+            <Setter Property="CanUserAddRows"
+                    Value="False" />
+            <Setter Property="IsReadOnly"
+                    Value="True" />
+            <Setter Property="SelectionMode"
+                    Value="Single" />
+            <Setter Property="KeyboardNavigation.TabNavigation"
+                    Value="None" />
+            <!--<Setter Property="materialDesign:DataGridAssist.CellPadding"
+                    Value="0" />-->
+            <Setter Property="SelectionUnit"
+                    Value="FullRow" />
+        </Style>
     </Application.Resources>
 </Application>
