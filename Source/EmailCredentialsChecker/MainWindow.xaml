@@ -1,0 +1,48 @@
+﻿<Window x:Class="EmailCredentialsChecker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Email Credentials Checker"
+        Height="600"
+        Width="800"
+        FontSize="20">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal">
+            <TextBox IsReadOnly="True"
+                     x:Name="txtPath"
+                     Width="400" />
+            <Button Content="Select File"
+                    Margin="10,0,0,0"
+                    Click="ButtonBase_OnClick" />
+            <Button x:Name="btnCheck" Content="Check" Margin="10,0,0,0" Click="BtnCheck_OnClick"/>
+        </StackPanel>
+        <DataGrid x:Name="dataGrid"
+                  Margin="0,10,0,0"
+                  AutoGenerateColumns="False"
+                  Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Email"
+                                    Width="1*"
+                                    Binding="{Binding Email}" />
+                <DataGridTextColumn Header="Password"
+                                    Width="1*"
+                                    Binding="{Binding Password}" />
+                <DataGridTextColumn Header="IsValid"
+                                    Width="Auto"
+                                    Binding="{Binding IsValid}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Grid.Row="2"
+                Margin="0,10,0,0"
+                Content="Export"
+                HorizontalAlignment="Left"/>
+    </Grid>
+</Window>
