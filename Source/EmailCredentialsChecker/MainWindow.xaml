@@ -3,11 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="Email Credentials Checker"
         Height="600"
         Width="800"
         AllowDrop="True"
+        Drop="MainWindow_OnDrop"
         FontSize="20">
     <Grid Margin="20">
         <Grid.RowDefinitions>
@@ -16,57 +18,89 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0"
+        <materialDesign:Card Grid.Row="0"
+                             Grid.RowSpan="2"
+                             Padding="10">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox IsReadOnly="True"
+                             x:Name="txtPath"
+                             Width="400" />
+                    <Button Content="Select File"
+                            Margin="10,0,0,0"
+                            Click="ButtonBase_OnClick" />
+                    <Button x:Name="btnCheck"
+                            Content="Check"
+                            Margin="10,0,0,0"
+                            Click="BtnCheck_OnClick"
+                            IsEnabled="false" />
+                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Content="0%" />
+                    <ProgressBar x:Name="progressBar"
+                                 VerticalAlignment="Top"
+                                 Grid.Column="1"
+                                 Margin="0,10,0,0"
+                                 Height="20" />
+                    <Label Grid.Column="2"
+                           Width="60"
+                           Content="0%"
+                           HorizontalContentAlignment="Right"
+                           x:Name="lblProgress" />
+                </Grid>
+            </StackPanel>
+        </materialDesign:Card>
+        <materialDesign:Card Grid.Row="2"
+                             VerticalAlignment="Stretch"
+                             Padding="20,0,20,20"
+                             Margin="0,10,0,0">
+            <DataGrid x:Name="dataGrid"
+                      AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Email"
+                                        Width="3*"
+                                        Binding="{Binding Email}" />
+                    <DataGridTextColumn Header="Password"
+                                        Width="3*"
+                                        Binding="{Binding Password}" />
+                    <DataGridTemplateColumn Header="Is Valid"
+                                            Width="1*"
+                                            SortMemberPath="IsValid">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <materialDesign:PackIcon Height="36"
+                                                         Width="36"
+                                                         Kind="{Binding IsValid, Converter={StaticResource isValidToIconConverter}}"
+                                                         Foreground="{Binding IsValid, Converter={StaticResource isValidToColorConverter}}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </materialDesign:Card>
+        <StackPanel Grid.Row="3"
+                    IsEnabled="False"
+                    x:Name="spSaveButtons"
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Left"
                     Orientation="Horizontal">
-            <TextBox IsReadOnly="True"
-                     x:Name="txtPath"
-                     Width="400" />
-            <Button Content="Select File"
-                    Margin="10,0,0,0"
-                    Click="ButtonBase_OnClick" />
-            <Button x:Name="btnCheck"
-                    Content="Check"
-                    Margin="10,0,0,0"
-                    Click="BtnCheck_OnClick"
-                    IsEnabled="false"/>
+            <Button x:Name="btnSaveSameFile"
+                    Click="BtnSaveSameFile_OnClick"
+                    Content="Save all in same file" />
+            <Button Content="Save all in new file"
+                    Click="BtnSaveNewFile_OnClick"
+                    x:Name="btnSaveNewFile"
+                    Margin="10,0,0,0" />
+            <Button Content="Save valid only"
+                    x:Name="btnSaveValidOnly"
+                    Click="BtnSaveValidOnly_OnClick"
+                    Margin="10,0,0,0" />
         </StackPanel>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Content="0%"/>
-            <ProgressBar x:Name="progressBar"
-                         VerticalAlignment="Top"
-                         Grid.Column="1"
-                         Margin="0,10,0,0"
-                         Height="20"/>
-            <Label Grid.Column="2"
-                   Width="60"
-                   Content="0%"
-                   HorizontalContentAlignment="Right"
-                   x:Name="lblProgress"/>
-        </Grid>
-        <DataGrid x:Name="dataGrid"
-                  Margin="0,10,0,0"
-                  AutoGenerateColumns="False"
-                  Grid.Row="2">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Email"
-                                    Width="1*"
-                                    Binding="{Binding Email}" />
-                <DataGridTextColumn Header="Password"
-                                    Width="1*"
-                                    Binding="{Binding Password}" />
-                <DataGridTextColumn Header="Is Valid"
-                                    Width="Auto"
-                                    Binding="{Binding IsValid}" />
-            </DataGrid.Columns>
-        </DataGrid>
-        <Button Grid.Row="3"
-                Margin="0,10,0,0"
-                Content="Export"
-                HorizontalAlignment="Left" />
     </Grid>
 </Window>

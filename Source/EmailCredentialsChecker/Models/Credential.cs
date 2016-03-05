@@ -8,7 +8,7 @@
 
     public class Credential : INotifyPropertyChanged
     {
-        private bool isValid;
+        private bool? isValid;
 
         public Credential(string email, string password)
         {
@@ -20,7 +20,7 @@
 
         public string Password { get; set; }
 
-        public bool IsValid
+        public bool? IsValid
         {
             get
             {

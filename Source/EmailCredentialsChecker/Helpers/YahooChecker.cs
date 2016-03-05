@@ -1,5 +1,7 @@
 ﻿namespace EmailCredentialsChecker.Helpers
 {
+    using System;
+
     using Models;
 
     using Pop3;
@@ -16,7 +18,7 @@
                 client.Dispose();
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
                 return false;
             }

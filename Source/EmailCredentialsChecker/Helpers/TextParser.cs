@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Windows;
 
     using Models;
 
@@ -14,12 +15,20 @@
             var lines = contents.Split(new char[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries);
 
             var credentials = new List<Credential>();
-            foreach (var line in lines)
+            int i = 0;
+            try
             {
-                var pair = line.Split('/');
+                for (i = 0; i < lines.Length; i++)
+                {
+                    var pair = lines[i].Split('/');
 
-                var credential = new Credential(pair[0], pair[1]);
-                credentials.Add(credential);
+                    var credential = new Credential(pair[0], pair[1]);
+                    credentials.Add(credential);
+                }
+            }
+            catch
+            {
+                MessageBox.Show($"Program cannot parse line {i + 1}", "Invalid format", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             return credentials;

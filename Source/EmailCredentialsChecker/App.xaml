@@ -1,28 +1,39 @@
 ﻿<Application x:Class="EmailCredentialsChecker.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:EmailCredentialsChecker"
+             xmlns:converters="clr-namespace:EmailCredentialsChecker.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <Style TargetType="{x:Type DataGrid}">
-            <Setter Property="FontSize"
-                    Value="25" />
-            <Setter Property="CanUserSortColumns"
-                    Value="True" />
-            <Setter Property="AutoGenerateColumns"
-                    Value="False" />
-            <Setter Property="CanUserAddRows"
-                    Value="False" />
-            <Setter Property="IsReadOnly"
-                    Value="True" />
-            <Setter Property="SelectionMode"
-                    Value="Single" />
-            <Setter Property="KeyboardNavigation.TabNavigation"
-                    Value="None" />
-            <!--<Setter Property="materialDesign:DataGridAssist.CellPadding"
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type DataGrid}"
+                   BasedOn="{StaticResource MaterialDesignDataGrid}">
+                <Setter Property="FontSize"
+                        Value="25" />
+                <Setter Property="CanUserSortColumns"
+                        Value="True" />
+                <Setter Property="AutoGenerateColumns"
+                        Value="False" />
+                <Setter Property="CanUserAddRows"
+                        Value="False" />
+                <Setter Property="IsReadOnly"
+                        Value="True" />
+                <Setter Property="SelectionMode"
+                        Value="Single" />
+                <Setter Property="KeyboardNavigation.TabNavigation"
+                        Value="None" />
+                <!--<Setter Property="materialDesign:DataGridAssist.CellPadding"
                     Value="0" />-->
-            <Setter Property="SelectionUnit"
-                    Value="FullRow" />
-        </Style>
+                <Setter Property="SelectionUnit"
+                        Value="FullRow" />
+            </Style>
+            <converters:IsValidToIconConverter x:Key="isValidToIconConverter" />
+            <converters:IsValidToColorConverter x:Key="isValidToColorConverter" />
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
