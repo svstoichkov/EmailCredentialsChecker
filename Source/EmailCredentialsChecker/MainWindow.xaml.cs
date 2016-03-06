@@ -65,6 +65,7 @@
             this.lblProgress.Content = "0%";
             this.credentials = TextParser.GetCredentials(path);
             this.dataGrid.ItemsSource = this.credentials;
+            this.lblCredCount.Content = this.credentials.Count;
             if (this.credentials.Any())
             {
                 this.btnCheck.IsEnabled = true;

@@ -8,7 +8,7 @@
 
     public class GoogleChecker
     {
-        public static bool Check(Credential credential)
+        public static bool? Check(Credential credential)
         {
             var client = new Pop3Client();
             try
@@ -18,7 +18,7 @@
               client.Dispose();
               return true;
             }
-            catch (InvalidOperationException ex)
+            catch (Exception ex)
             {
                 if (ex.Message.Contains("Web login required"))
                 {
