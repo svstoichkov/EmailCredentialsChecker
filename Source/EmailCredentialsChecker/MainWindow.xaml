@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:viewModels="clr-namespace:EmailCredentialsChecker.ViewModels"
         mc:Ignorable="d"
         Title="Email Credentials Checker"
         Height="600"
@@ -11,7 +12,10 @@
         AllowDrop="True"
         Drop="MainWindow_OnDrop"
         FontSize="20">
-    <Grid Margin="20">
+    <Window.DataContext>
+        <viewModels:MainViewModel />
+    </Window.DataContext>
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -20,20 +24,22 @@
         </Grid.RowDefinitions>
         <materialDesign:Card Grid.Row="0"
                              Grid.RowSpan="2"
-                             Padding="10">
+                             Padding="10"
+                             Margin="10,10,10,0">
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBox IsReadOnly="True"
-                             x:Name="txtPath"
+                             Text="{Binding Path}"
                              Width="400" />
                     <Button Content="Select File"
                             Margin="10,0,0,0"
-                            Click="ButtonBase_OnClick" />
-                    <Button x:Name="btnCheck"
-                            Content="Check"
+                            Command="{Binding SelectFile}" />
+                    <Button Content="Check"
                             Margin="10,0,0,0"
-                            Click="BtnCheck_OnClick"
-                            IsEnabled="false" />
+                            Command="{Binding Check}" />
+                    <Button Content="Recheck invalid"
+                            Margin="10,0,0,0"
+                            Command="{Binding Recheck}"/>
                 </StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -43,25 +49,24 @@
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0"
                            Content="0%" />
-                    <ProgressBar x:Name="progressBar"
-                                 VerticalAlignment="Top"
+                    <ProgressBar VerticalAlignment="Top"
                                  Grid.Column="1"
                                  Margin="0,10,0,0"
-                                 Height="20" />
+                                 Height="20"
+                                 Value="{Binding Progress}" />
                     <Label Grid.Column="2"
                            Width="60"
-                           Content="0%"
-                           HorizontalContentAlignment="Right"
-                           x:Name="lblProgress" />
+                           Content="{Binding Progress, Converter={StaticResource doubleToPercentConverter}}"
+                           HorizontalContentAlignment="Right" />
                 </Grid>
             </StackPanel>
         </materialDesign:Card>
         <materialDesign:Card Grid.Row="2"
                              VerticalAlignment="Stretch"
                              Padding="20,0,20,20"
-                             Margin="0,10,0,0">
-            <DataGrid x:Name="dataGrid"
-                      AutoGenerateColumns="False">
+                             Margin="10,10,10,0">
+            <DataGrid AutoGenerateColumns="False"
+                      ItemsSource="{Binding Credentials}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Email"
                                         Width="3*"
@@ -85,26 +90,27 @@
             </DataGrid>
         </materialDesign:Card>
         <StackPanel Grid.Row="3"
-                    IsEnabled="False"
-                    x:Name="spSaveButtons"
-                    Margin="0,10,0,0"
+                    Margin="20,20,0,20"
                     HorizontalAlignment="Left"
                     Orientation="Horizontal">
-            <Button x:Name="btnSaveSameFile"
-                    Click="BtnSaveSameFile_OnClick"
-                    Content="Save all in same file" />
+            <Button Content="Save all in same file" 
+                    Command="{Binding SaveSameFile}"/>
             <Button Content="Save all in new file"
-                    Click="BtnSaveNewFile_OnClick"
-                    x:Name="btnSaveNewFile"
-                    Margin="10,0,0,0" />
+                    Margin="10,0,0,0" 
+                    Command="{Binding SaveNewFile}"/>
             <Button Content="Save valid only"
-                    x:Name="btnSaveValidOnly"
-                    Click="BtnSaveValidOnly_OnClick"
-                    Margin="10,0,0,0" />
+                    Margin="10,0,0,0" 
+                    Command="{Binding SaveValidOnly}"/>
         </StackPanel>
         <Label Grid.Row="3"
-               Margin="0,10,0,0"
-               x:Name="lblCredCount"
-               HorizontalAlignment="Right"/>
+               HorizontalAlignment="Right"
+               VerticalAlignment="Bottom"
+               FontSize="14"
+               Content="Drag and drop is supported" />
+        <Label Grid.Row="3"
+               Margin="0,0,20,0"
+               VerticalAlignment="Top"
+               Content="{Binding ElementName=dataGrid, Path=ItemsSource.Count}"
+               HorizontalAlignment="Right" />
     </Grid>
 </Window>

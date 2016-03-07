@@ -8,7 +8,7 @@
 
     public static class YahooChecker
     {
-        public static bool Check(Credential credential)
+        public static bool? Check(Credential credential)
         {
             var client = new Pop3Client();
             try
@@ -18,9 +18,13 @@
                 client.Dispose();
                 return true;
             }
-            catch (Exception ex)
+            catch (InvalidOperationException ex)
             {
                 return false;
+            }
+            catch
+            {
+                return null;
             }
         }
     }
