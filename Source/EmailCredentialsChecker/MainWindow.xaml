@@ -66,6 +66,7 @@
                              Padding="20,0,20,20"
                              Margin="10,10,10,0">
             <DataGrid AutoGenerateColumns="False"
+                      x:Name="dataGrid"
                       ItemsSource="{Binding Credentials}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Email"

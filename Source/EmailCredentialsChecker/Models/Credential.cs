@@ -59,11 +59,12 @@
             switch (this.Email.Split('@')[1])
             {
                 case "yahoo.com": return EmailType.Yahoo;
+                case "yahoo.com.ar": return EmailType.Yahoo;
                 case "gmail.com": return EmailType.Google;
                 case "aol.com": return EmailType.Aol;
                 case "att.net": return EmailType.Att;
                 case "sbcglobal.net": return EmailType.Att;
-                default: throw new ArgumentException();
+                default: return EmailType.Unknown;
             }
         }
 

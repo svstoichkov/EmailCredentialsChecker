@@ -23,6 +23,7 @@
         private string path;
         private double progress;
         private bool isChecked;
+        private bool isChecking;
 
         public MainViewModel()
         {
@@ -120,13 +121,15 @@
 
         private bool CanCheck()
         {
-            return this.Credentials.Any() && this.isChecked == false;
+            return this.Credentials.Any() && this.isChecked == false && this.isChecking == false;
         }
 
         private async void HandleCheck()
         {
+            this.isChecking = true;
             await this.CheckCredentials(this.Credentials);
             await this.CheckCredentials(this.Credentials.Where(x => x.IsValid != true));
+            this.isChecking = false;
 
             this.isChecked = true;
             this.ShowFinalMessage();
